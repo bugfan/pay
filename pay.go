@@ -195,7 +195,7 @@ func parseJWS2(data string, args ...string) (*Header, map[string]string, *Signat
 		return nil, nil, nil, err
 	}
 	payload := make(map[string]string, 0)
-	err = json.Unmarshal(decoded, payload)
+	err = json.Unmarshal(decoded, &payload)
 	if err != nil {
 		return nil, nil, nil, err
 	}
