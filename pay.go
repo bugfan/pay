@@ -175,7 +175,7 @@ func parseJWS(data string, args ...string) (*Header, *Payload, *Signature, error
 	return header, payload, sign, nil
 }
 
-func parseJWS2(data string, args ...string) (*Header, map[string]string, *Signature, error) {
+func parseJWS2(data string, args ...string) (*Header, map[string]interface{}, *Signature, error) {
 	arr := strings.Split(data, ".")
 	if len(arr) != 3 {
 		return nil, nil, nil, errors.New("error data")
@@ -194,7 +194,7 @@ func parseJWS2(data string, args ...string) (*Header, map[string]string, *Signat
 	if err != nil {
 		return nil, nil, nil, err
 	}
-	payload := make(map[string]string, 0)
+	payload := make(map[string]interface{}, 0)
 	err = json.Unmarshal(decoded, &payload)
 	if err != nil {
 		return nil, nil, nil, err
@@ -239,12 +239,12 @@ func NewNotificationMap(data string) (*NotificationMap, error) {
 type NotificationMap struct {
 	header    *Header
 	signature *Signature
-	payload   map[string]string
+	payload   map[string]interface{}
 }
 
 func (n NotificationMap) HeaderMap() *Header {
 	return n.header
 }
-func (n NotificationMap) PayloadMap() map[string]string {
+func (n NotificationMap) PayloadMap() map[string]interface{} {
 	return n.payload
 }
